@@ -1,0 +1,28 @@
+// Design code
+module full_adder(input a,b,cin,
+                  output sum,carry);
+  assign sum = a^b^cin;
+  assign carry = (a&b)|(b&cin)|(cin&a);
+endmodule
+
+
+
+// Code of testbench
+module full_adder_tb();
+  reg a_tb,b_tb,cin_tb;
+  wire sum_tb,carry_tb;
+  full_adder uut (.a(a_tb),.b(b_tb),.cin(cin_tb),.sum(sum_tb),.carry(carry_tb));
+  initial begin
+    $display("a_tb b_tb cin_tb | sum_tb carry_tb");
+    $monitor("%b %b %b | %b %b", a_tb,b_tb,cin_tb,sum_tb,carry_tb);
+    a_tb=1'b0 ; b_tb=1'b0 ; cin_tb=1'b0 ; #10;
+    a_tb=1'b0 ; b_tb=1'b0 ; cin_tb=1'b1 ; #10;
+    a_tb=1'b0 ; b_tb=1'b1 ; cin_tb=1'b0 ; #10;
+    a_tb=1'b0 ; b_tb=1'b1 ; cin_tb=1'b1 ; #10;
+    a_tb=1'b1 ; b_tb=1'b0 ; cin_tb=1'b0 ; #10;
+    a_tb=1'b1 ; b_tb=1'b0 ; cin_tb=1'b1 ; #10;
+    a_tb=1'b1 ; b_tb=1'b1 ; cin_tb=1'b0 ; #10;
+    a_tb=1'b1 ; b_tb=1'b1 ; cin_tb=1'b1 ; #10;
+    $finish;
+  end
+endmodule
