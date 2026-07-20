@@ -1,0 +1,58 @@
+//Design code
+
+module mux(input [3:0]I,
+           input [1:0]S,
+           output reg y);
+  always@(*)
+    begin
+      case(S)
+        2'b00 : y=I[0];
+        2'b01 : y=I[1];
+        2'b10 : y=I[2];
+        2'b11 : y=I[3];
+      endcase
+    end
+endmodule
+
+//test bench 
+
+module mux_tb;
+reg [3:0] I_tb;
+reg [1:0] S_tb;
+wire y_tb;
+integer pass = 0, fail = 0;
+mux uut (
+    .I(I_tb),
+    .S(S_tb),
+    .y(y_tb)
+);
+// Task to check output
+task check;
+    input exp_y_tb;
+    begin
+        #2;
+        if (y_tb == exp_y_tb) begin
+            $display("PASS: time=%0t I=%b S=%b y=%b expected=%b",
+                     $time, I_tb, S_tb, y_tb, exp_y_tb);
+            pass = pass + 1;
+        end
+        else begin
+            $display("FAIL: time=%0t I=%b S=%b y=%b expected=%b",
+                     $time, I_tb, S_tb, y_tb, exp_y_tb);
+            fail = fail + 1;
+        end
+    end
+endtask
+initial begin
+    I_tb = 4'b1010;
+    S_tb = 2'b00; check(0);
+    S_tb = 2'b01; check(1);
+    S_tb = 2'b10; check(0);
+    S_tb = 2'b11; check(1);
+    $display("=================================");
+    $display("PASS = %0d", pass);
+    $display("FAIL = %0d", fail);
+    $display("=================================");
+    $finish;
+end
+endmodule
