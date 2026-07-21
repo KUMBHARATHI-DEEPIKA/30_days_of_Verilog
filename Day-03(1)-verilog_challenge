@@ -1,0 +1,47 @@
+//Design code
+module p_encoder(input [3:0]B,
+                 output reg [1:0]y);
+  always @(*)begin
+    if(B[3])
+      y=2'b11;
+    else if(B[2])
+      y=2'b10;
+    else if(B[1])
+      y=2'b01;
+    else
+      y=2'b00;
+  end
+endmodule
+
+
+
+//Test bench
+
+module p_encoder_tb;
+  reg [3:0]B;
+  p_encoder uut (.B(B),.y(y));
+  initial begin
+    $display(" B     | y");
+    $monitor("%b | %b", B, y);
+    // Test cases
+    B = 4'b0000; #10;
+    B = 4'b0001; #10;
+    B = 4'b0010; #10;
+    B = 4'b0011; #10;
+    B = 4'b0100; #10;
+    B = 4'b0101; #10;
+    B = 4'b0110; #10;
+    B = 4'b0111; #10;
+    B = 4'b1000; #10;
+    B = 4'b1001; #10;
+    B = 4'b1010; #10;
+    B = 4'b1011; #10;
+    B = 4'b1100; #10;
+    B = 4'b1101; #10;
+    B = 4'b1110; #10;
+    B = 4'b1111; #10;
+
+    $finish;
+end
+
+endmodule
