@@ -1,0 +1,41 @@
+// Code your design here
+module demux(
+    input i,
+  input [1:0] sel,
+    output reg [3:0] y
+);
+always @(*) begin
+ y = 4'b0000; 
+  case(sel)
+        2'b00: y[0] = i;
+        2'b01: y[1] = i;
+        2'b10: y[2] = i;
+        2'b11: y[3] = i;
+    endcase
+end
+endmodule
+
+
+
+//testbench
+module demux_tb;
+reg i;
+  reg [1:0] sel;
+wire [3:0] y;
+demux uut(
+    .i(i),.sel(sel),.y(y));
+initial begin
+  $display("I\tSel\tY");
+  $monitor("%b\t%b\t%b", i, sel, y);
+    i = 1; sel = 2'b00; #10;
+    i = 1; sel = 2'b01; #10;
+    i = 1; sel = 2'b10; #10;
+    i = 1; sel = 2'b11; #10;
+
+    i = 0; sel = 2'b00; #10;
+    i = 0; sel = 2'b01; #10;
+    i = 0; sel = 2'b10; #10;
+    i = 0; sel = 2'b11; #10;
+    $finish;
+end
+endmodule
